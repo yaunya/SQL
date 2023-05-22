@@ -1,0 +1,57 @@
+*mariaDB 연습
+
+- 데이터베이스 애플리케이션은 기본 애플리케이션과 별도로 존재하며 데이터 컬렉션을 저장한다. 
+- 각 데이터베이스는 하나 이상의 API를 사용하여 포함된 데이터를 작성,액세스,관리,검색 및 복사를 수행할 수 있다.
+- mariaDB에서 create table 명령문은 선택된 데이터베이스에서 테이블을 작성하는데 사용된다. 
+1. DB생성 CREATE DATABASE testdb;
+- create table 명령문을 사용하여 주어진 이름으로 테이블을 작성 할 수 있다. 근데 여기서 테이블 create를 작성하려면 테이블 또는 데이터베이스 권한이 필요하다. 
+2. TABLE 생성 
+ex) CREATE TABLE table_name (column_name column_type);
+- 가장 기본적인 형태로, create table 명령문은 테이블 이름과 열, 인덱스 및 제약 조건을 제공한다. 
+- 기본적으로 테이블은 기본 데이터베이스에 작성된다. 
+- db_name.tbl_name 데이터베이스를 지정하는데 사용한다. 즉 참조된 테이블 이름으로 각 데이터베이스 및 테이블 이름(db_name.tbl_name)을 지정할 수 있다. 
+
+-가장 기본적인 구문으로는 ex)
+USE testdb;
+CREATE TABLE students(
+      student_id INT NOT NULL AUTO_INCREMENT,
+      student_name VARCHAR(100) NOT NULL, 
+      student_address VARCHAR(40) NOT_NULL,
+      admission_date DATE,
+      PRIMARY KEY(student_id)
+ );
+ 
+ 3. SHOW TAMLES 명령어를 사용하여 테이블 작성에 성공했는지 확인할 수 있다.
+ ex) SHOW CREATE TABLE 'testdb'.'students'; 
+ 
+ -테이블을 만드는데 일반적으로 사용되는 명령문으로는 ex)
+ CREATE TABLE if not exists test(
+    a bigint auto_increment primary key,
+    name varchar(128) charset utf8,
+    key name(name(32))
+ ) engine=InnoDB defefault charset utf8;
+ 
+4. 테이블 수정
+- ALTER TABLE 명령은 기존 테이블의 구조를 변경하는데 사용됩니다 예를 들어, 열을 추가 또는 삭제하거나 인덱스를 작성 또는 제거하거나 기존 열의 유형을 변경하거나 열 또는 테이블 이름을 바꿀 수 있습니다. 테이블의 주석과 테이블의 스토리지 엔진을 변경할 수도 있습니다. 
+- 다른 연결이 테이블을 사용하는 경우 메타 데이터 잠금이 활성화되고 이 명령문은 잠금이 해제 될 때까지 기다립니다. 비 트랜잭션 테이블에 대해서도 마찬가지입니다.
+- 값이 중복된 열(또는 열그룹)에 UNIQUE 색인을 추가하면 오류가 발생하고 명령문이 중지됩니다. 오류를 억제하고 UNIQUE 인덱스 작성을 강제 실행하고 중복을 삭제하기 위해 IGNORE옵션을 지정할 수 있습니다. 열(또는 열집합)이 고유해야 하지만 중복된 값을 포함하는 경우 이 방법이 유용할 수 있지만이 기술은 저장되는 행과 삭제된 행을 제어할 수 없습니다. 
+
+- 열 추가 , 원래 테이블에 열을 추가하려면 다음 구문을 참조하면 된다. ex)
+ALTER TABLE table_name ADD COLUMN [IF NOT EXISTS] (col_name colnmn_defrinition, ...)
+
+CREATE TABLE t(id INT PRIMARY KEY, u INT UNSIGNED NOT NULL UNIQUE)
+ENGINE=InnoDB;
+
+INSERT INTO t(id,u) VALUES(1,1),(2,2),(3,3);
+
+ALTER TABLE t ADD COLUMN
+(d DATETIME DEFAULT current_timetamp(),
+ p POINT NOT NULL DEFAULT ST_GeomFromText('POINT(0 0)'),
+ t TEXT CHARSET utf8 DEFAULT 'the quick brown fox jumps over the lazy dog');
+ 
+ UPDATE t SET t=NULL WHERE id=3;
+ 
+ SELECT id,u,d,ST_AsText(p),t FROM t;
+ 
+ SELECT variable_value
+
