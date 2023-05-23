@@ -39,19 +39,49 @@ CREATE TABLE students(
 - 열 추가 , 원래 테이블에 열을 추가하려면 다음 구문을 참조하면 된다. ex)
 ALTER TABLE table_name ADD COLUMN [IF NOT EXISTS] (col_name colnmn_defrinition, ...)
 
-CREATE TABLE t(id INT PRIMARY KEY, u INT UNSIGNED NOT NULL UNIQUE)
-ENGINE=InnoDB;
+열 삭제 
+ALTER TABLE xxxx DROP COLUMN [IF EXISTS] col_name [CASCAD | RESTRICT]
 
-INSERT INTO t(id,u) VALUES(1,1),(2,2),(3,3);
+다중 열 UNIQUE 제약 조건에 속하는 열은 삭제할 수 없습니다. 예를 들면 다음과 같습니다.
+CREATE TABLE a(
+      a int,
+      b int,
+      primary key(a,b)
+);
+ALTER TABLE x 
 
-ALTER TABLE t ADD COLUMN
-(d DATETIME DEFAULT current_timetamp(),
- p POINT NOT NULL DEFAULT ST_GeomFromText('POINT(0 0)'),
- t TEXT CHARSET utf8 DEFAULT 'the quick brown fox jumps over the lazy dog');
- 
- UPDATE t SET t=NULL WHERE id=3;
- 
- SELECT id,u,d,ST_AsText(p),t FROM t;
- 
- SELECT variable_value
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
